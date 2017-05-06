@@ -246,9 +246,23 @@ class Connection(object):
 
 class Row(dict):
     """A dict that allows for object-like property access syntax."""
+    def __init__(self, data):
+        if isinstance(data, list):
+            self._dict = dict(data)
+        elif isinstance(data, dict):
+            self._dict = data
+        else:
+            self._dict = {}
+
+    def __getitem__(self, name):
+        try:
+            return self._dict[name]
+        except KeyError:
+            raise AttributeError(name)
+ 
     def __getattr__(self, name):
         try:
-            return self[name]
+            return self._dict[name]
         except KeyError:
             raise AttributeError(name)
 
