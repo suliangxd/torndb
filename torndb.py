@@ -244,7 +244,7 @@ class Connection(object):
             raise
 
 
-class Row(dict):
+class Row():
     """A dict that allows for object-like property access syntax."""
     def __init__(self, data):
         if isinstance(data, list):
